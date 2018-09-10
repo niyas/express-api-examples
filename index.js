@@ -3,6 +3,7 @@ const Client = require('node-rest-client').Client;
 const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
+const debug = require('debug')('app:startup'); //can have any name in the namespace and also set multiple debug nmaespaces
 
 const logging = require('./logging');
 const Joi = require('joi');
@@ -12,14 +13,14 @@ const app = express();
 
 app.use(helmet());
 
-console.log(`Application Name: ${config.get('name')}`);
-console.log(`Email Host: ${config.get('email.host')}`);
-console.log(`Email Password: ${config.get('email.password')}`);
+debug(`Application Name: ${config.get('name')}`);
+debug(`Email Host: ${config.get('email.host')}`);
+debug(`Email Password: ${config.get('email.password')}`);
 
 
 if(app.get('env') === 'development') {
     app.use(morgan('tiny'));
-    console.log("Morgan Started...");
+    debug("Morgan Started...");
 }
 
 app.use(express.json());

@@ -2,6 +2,7 @@ const express = require('express');
 const Client = require('node-rest-client').Client;
 const helmet = require('helmet');
 const morgan = require('morgan');
+const config = require('config');
 
 const logging = require('./logging');
 const Joi = require('joi');
@@ -10,6 +11,11 @@ const client = new Client();
 const app = express();
 
 app.use(helmet());
+
+console.log(`Application Name: ${config.get('name')}`);
+console.log(`Email Host: ${config.get('email.host')}`);
+console.log(`Email Password: ${config.get('email.password')}`);
+
 
 if(app.get('env') === 'development') {
     app.use(morgan('tiny'));
